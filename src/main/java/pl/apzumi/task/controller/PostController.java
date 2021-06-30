@@ -15,4 +15,9 @@ public class PostController {
         postFetchService.getPosts();
     }
 
+    @GetMapping("/posts")
+    public void getAllPosts() {
+        postFetchService.getPosts();
+    }
+
 }
