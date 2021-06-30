@@ -24,3 +24,6 @@
 * Repository
 
 * RestTemplate do parsowania Jsona z api
+
+* Actuator
+* try-with-resources 

@@ -1,19 +1,18 @@
 package pl.apzumi.task.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import pl.apzumi.task.service.PostService;
+import pl.apzumi.task.service.PostFetchService;
 
 @RestController
+@RequiredArgsConstructor
 public class PostController {
-    private final PostService postService;
-
-    public PostController(PostService postService) {
-        this.postService = postService;
-    }
+    private final PostFetchService postFetchService;
 
     @GetMapping("/fetch")
     public void fetchAllPosts() {
-        postService.getPosts();
+        postFetchService.getPosts();
     }
+
 }
