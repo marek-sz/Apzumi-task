@@ -26,4 +26,6 @@
 * RestTemplate do parsowania Jsona z api
 
 * Actuator
-* try-with-resources 
+* try-with-resources
+
+* Add Swagger on http://localhost:8080/swagger-ui.html 

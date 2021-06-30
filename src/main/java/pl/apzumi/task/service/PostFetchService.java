@@ -25,4 +25,5 @@ public class PostFetchService {
         log.info(collect.toString());
         return collect;
     }
+
 }
