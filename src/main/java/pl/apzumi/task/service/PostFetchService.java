@@ -6,7 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.dto.PostDto;
+import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
 import java.util.Arrays;
@@ -19,11 +21,13 @@ import java.util.stream.Collectors;
 public class PostFetchService {
     public static final String BASE_API_URL = "https://jsonplaceholder.typicode.com/posts";
     private final PostRepository postRepository;
+    private final PostMapper postMapper;
 
-    @Scheduled(cron = "* * * * * ?")
+    @Scheduled(cron = "*/5 * * * * ?")
     public void fetchData() {
 //        postRepository.saveAllExceptEditedAndDeletedByUser();
-
+        List<PostEntity> postEntities = postMapper.mapToEntities(getPosts());
+        postRepository.saveAll(postEntities);
         log.info("Not implemented");
     }
 

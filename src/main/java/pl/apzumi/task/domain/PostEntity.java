@@ -14,5 +14,6 @@ public class PostEntity {
     private Long userId;
     private String title;
     private String body;
+    private boolean modifiedByUser;
 
 }

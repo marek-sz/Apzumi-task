@@ -1,9 +1,11 @@
 package pl.apzumi.task.mappers;
 
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.dto.PostDto;
 
+@Component
 public class PostMapper implements AbstractMapper<PostDto, PostEntity> {
     @Override
     public PostDto mapToDto(PostEntity postEntity) {
