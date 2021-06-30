@@ -23,4 +23,4 @@
 * Service
 * Repository
 
-* 
+* RestTemplate do parsowania Jsona z api
