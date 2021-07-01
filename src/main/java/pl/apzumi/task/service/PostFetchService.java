@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.dto.PostDto;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
@@ -25,21 +24,16 @@ public class PostFetchService {
 
     @Scheduled(cron = "*/5 * * * * ?")
     public void fetchData() {
-//        postRepository.saveAllExceptEditedAndDeletedByUser();
-        List<PostEntity> postEntities = postMapper.mapToEntities(getPosts());
-        postRepository.saveAll(postEntities);
-        log.info("Not implemented");
+        postRepository.updateAllExceptEditedAndDeletedByUser(getPosts());
     }
 
-    public List<PostDto> getPosts() {
+    private List<PostDto> getPosts() {
+        // TODO: 2021-06-30 add try with resources
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PostDto[]> responseEntity = restTemplate.getForEntity(BASE_API_URL, PostDto[].class);
         PostDto[] postsArray = responseEntity.getBody();
         assert postsArray != null;
-        List<PostDto> postsList = Arrays.stream(postsArray)
+        return Arrays.stream(postsArray)
                 .collect(Collectors.toList());
-        log.info(postsList.toString());
-        return postsList;
     }
-
 }

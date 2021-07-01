@@ -13,5 +13,6 @@ public class PostDto {
     private Long userId;
     private String title;
     private String body;
+    private boolean modifiedByUser;
 
 }

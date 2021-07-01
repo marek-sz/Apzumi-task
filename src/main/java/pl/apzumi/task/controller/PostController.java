@@ -12,12 +12,12 @@ public class PostController {
 
     @GetMapping("/fetch")
     public void fetchAllPosts() {
-        postFetchService.getPosts();
+        postFetchService.fetchData();
     }
 
     @GetMapping("/posts")
     public void getAllPosts() {
-        postFetchService.getPosts();
+        postFetchService.fetchData();
     }
 
 }
