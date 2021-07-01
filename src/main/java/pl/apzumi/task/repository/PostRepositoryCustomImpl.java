@@ -13,7 +13,7 @@ import java.util.List;
 public class PostRepositoryCustomImpl implements PostRepositoryCustom {
 
     @PersistenceContext
-    protected EntityManager entityManager;
+    private EntityManager entityManager;
 
     @Override
     public void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts) {

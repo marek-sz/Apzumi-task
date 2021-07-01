@@ -1,0 +1,6 @@
+INSERT INTO POST_ENTITY (BODY, MODIFIED_BY_USER, TITLE, USER_ID)
+                VALUES ('sample body1', FALSE, 'sample title1', 1)
+INSERT INTO POST_ENTITY (BODY, MODIFIED_BY_USER, TITLE, USER_ID)
+                VALUES ('sample body2', TRUE, 'sample title2', 1)
+INSERT INTO POST_ENTITY (BODY, MODIFIED_BY_USER, TITLE, USER_ID)
+                VALUES ('sample body3', FALSE, 'sample title3', 1)
