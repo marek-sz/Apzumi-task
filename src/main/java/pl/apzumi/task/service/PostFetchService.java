@@ -5,7 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
+import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.dto.PostDto;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
@@ -22,9 +24,17 @@ public class PostFetchService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    @Scheduled(cron = "*/5 * * * * ?")
+    @Scheduled(cron = "* * * * * ?")
+    @Transactional
     public void fetchData() {
-        postRepository.updateAllExceptEditedAndDeletedByUser(getPosts());
+        List<PostEntity> posts = postMapper.mapToEntities(getPosts());
+        if (postRepository.count() == 0) {
+            postRepository.saveAll(posts);
+            log.info("Data inserted");
+        } else {
+            postRepository.updateAllExceptEditedAndDeletedByUser(posts);
+            log.info("Data updated");
+        }
     }
 
     private List<PostDto> getPosts() {

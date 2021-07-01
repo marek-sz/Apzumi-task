@@ -17,16 +17,14 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
 
     @Override
     public void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts) {
-
         QPostEntity qPostEntity = QPostEntity.postEntity;
         JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
-
         posts
                 .forEach(postEntity ->
                         jpaQueryFactory
                                 .update(qPostEntity)
-                                .where(qPostEntity.modifiedByUser.eq(false)
-                                        .and(qPostEntity.id.eq(postEntity.getId())))
+                                .where(qPostEntity.id.eq(postEntity.getId())
+                                        .and(qPostEntity.modifiedByUser.eq(false)))
                                 .set(qPostEntity.title, postEntity.getTitle())
                                 .set(qPostEntity.body, postEntity.getBody())
                                 .execute()
