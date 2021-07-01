@@ -2,7 +2,7 @@ package pl.apzumi.task.dto;
 
 import lombok.*;
 
-@Getter
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

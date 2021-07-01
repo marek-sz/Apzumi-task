@@ -18,6 +18,9 @@ public class PostService {
     private final PostMapper postMapper;
 
     public List<PostDto> getFilteredPostsByTitle(String title) {
+        if (title == null) {
+            return postMapper.mapToDtos(postRepository.findAll());
+        }
         List<PostEntity> filteredPosts = postRepository.getFilteredPosts(title);
         return postMapper.mapToDtos(filteredPosts);
     }

@@ -22,8 +22,8 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<PostDto> getFilteredPosts(@RequestParam String name) {
-        return postService.getFilteredPostsByTitle(name);
+    public List<PostDto> getFilteredPosts(@RequestParam(required = false) String title) {
+        return postService.getFilteredPostsByTitle(title);
     }
 
 }
