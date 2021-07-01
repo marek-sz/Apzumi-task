@@ -15,19 +15,30 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
+// TODO: 2021-07-01 Criteria api for update??
+@Override
+public void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts) {
+    QPostEntity qPostEntity = QPostEntity.postEntity;
+    JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
+    posts
+            .forEach(postEntity ->
+                    jpaQueryFactory
+                            .update(qPostEntity)
+                            .where(qPostEntity.id.eq(postEntity.getId())
+                                    .and(qPostEntity.modifiedByUser.eq(false)))
+                            .set(qPostEntity.title, postEntity.getTitle())
+                            .set(qPostEntity.body, postEntity.getBody())
+                            .execute()
+            );
+}
+
     @Override
-    public void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts) {
-        QPostEntity qPostEntity = QPostEntity.postEntity;
-        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
-        posts
-                .forEach(postEntity ->
-                        jpaQueryFactory
-                                .update(qPostEntity)
-                                .where(qPostEntity.id.eq(postEntity.getId())
-                                        .and(qPostEntity.modifiedByUser.eq(false)))
-                                .set(qPostEntity.title, postEntity.getTitle())
-                                .set(qPostEntity.body, postEntity.getBody())
-                                .execute()
-                );
+    public List<PostEntity> getFilteredPosts(String title) {
+        PostCriteria.builder()
+                .title(title)
+                .build();
+
+        return null;
     }
+
 }
