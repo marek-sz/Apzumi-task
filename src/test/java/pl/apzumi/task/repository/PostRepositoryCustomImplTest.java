@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.TestInstance.Lifecycle;
 
 @SpringBootTest
@@ -25,61 +26,73 @@ public class PostRepositoryCustomImplTest {
     @Autowired
     private PostRepository postRepository;
     private List<PostEntity> fetchedFromPublicApi;
+    private List<PostEntity> dbRecords;
+    private PostEntity postFromApi1;
+    private PostEntity postFromApi2;
+    private PostEntity postFromApi3;
+    private PostEntity postFromDb1;
+    private PostEntity postFromDb2;
 
     @BeforeAll
     public void init() {
         fetchedFromPublicApi = new ArrayList<>();
-        PostEntity post1 = PostEntity.builder()
+        postFromApi1 = PostEntity.builder()
                 .id(1L)
                 .userId(1L)
-                .title("title1")
-                .body("body1")
+                .title("new title")
+                .body("new body")
                 .modifiedByUser(false)
                 .build();
-        PostEntity post2 = PostEntity.builder()
+        postFromApi2 = PostEntity.builder()
                 .id(2L)
                 .userId(1L)
                 .title("title2")
                 .body("body2")
                 .modifiedByUser(false)
                 .build();
-        PostEntity post3 = PostEntity.builder()
+        postFromApi3 = PostEntity.builder()
                 .id(3L)
                 .userId(1L)
                 .title("title3")
                 .body("body3")
                 .modifiedByUser(false)
                 .build();
-        fetchedFromPublicApi.add(post1);
-        fetchedFromPublicApi.add(post2);
-        fetchedFromPublicApi.add(post3);
-    }
+        fetchedFromPublicApi.add(postFromApi1);
+        fetchedFromPublicApi.add(postFromApi2);
+        fetchedFromPublicApi.add(postFromApi3);
 
-    @Test
-    public void shouldUpdatePostsExceptModifiedByUser() {
-        List<PostEntity> dbRecords = new ArrayList<>();
-        PostEntity post1 = PostEntity.builder()
+        dbRecords = new ArrayList<>();
+        postFromDb1 = PostEntity.builder()
                 .id(1L)
                 .userId(1L)
                 .title("title1")
                 .body("body1")
                 .modifiedByUser(false)
                 .build();
-        PostEntity post2 = PostEntity.builder()
+        postFromDb2 = PostEntity.builder()
                 .id(2L)
                 .userId(1L)
                 .title("updated title")
                 .body("updated body")
                 .modifiedByUser(true)
                 .build();
-        dbRecords.add(post1);
-        dbRecords.add(post2);
+        dbRecords.add(postFromDb1);
+        dbRecords.add(postFromDb2);
         postRepository.saveAll(dbRecords);
+    }
 
+    @Test
+    public void shouldUpdatePostsExceptModifiedByUser() {
         postRepository.updateAllExceptEditedAndDeletedByUser(fetchedFromPublicApi);
-
         assertEquals(2, postRepository.count());
+        assertTrue(postRepository.findAll().contains(postFromApi1));
+        assertTrue(postRepository.findAll().contains(postFromDb2));
+    }
 
-        postRepository.findAll().forEach(System.out::println);
+    @Test
+    void shouldReturnOnePostWhenGetPostsIsCalledWithParameter() {
+        List<PostEntity> posts = postRepository.getPosts("title1");
+        assertEquals(1, posts.size());
+        assertTrue(posts.contains(postFromDb1));
     }
 }

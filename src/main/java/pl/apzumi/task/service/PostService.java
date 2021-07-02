@@ -31,19 +31,12 @@ public class PostService {
     }
 
     public void deletePost(Long id) {
-        boolean exists = postRepository.existsById(id);
-        if (!exists) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Resource with id " + id + " not found");
-        }
+        checkIfPostExists(id);
         postRepository.deleteById(id);
     }
 
     public void updatePost(Long id, String title, String body) {
-        // TODO: 2021-07-02 repeated find by id ->extract to method
-        PostEntity postEntity = postRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Resource with id " + id + " not found"));
+        PostEntity postEntity = checkIfPostExists(id);
 
         if (title != null &&
                 title.length() > 0 &&
@@ -56,5 +49,11 @@ public class PostService {
             postEntity.setBody(body);
         }
         postEntity.setModifiedByUser(true);
+    }
+
+    private PostEntity checkIfPostExists(Long id) {
+        return postRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Resource with id " + id + " not found"));
     }
 }
