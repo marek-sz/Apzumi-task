@@ -25,7 +25,7 @@ public class PostFetchService extends AbstractPostService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    @Scheduled(cron = "* * * * * ?")
+    @Scheduled(cron = "*/10 * * * * ?")
     public void fetchData() {
         List<PostEntity> posts = postMapper.mapToEntities(getPosts());
         if (postRepository.count() == 0) {

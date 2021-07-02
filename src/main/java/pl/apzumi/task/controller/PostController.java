@@ -34,7 +34,6 @@ public class PostController {
             @PathVariable Long id,
             @RequestParam String title,
             @RequestParam String body) {
-
         postService.updatePost(id, title, body);
     }
 }
