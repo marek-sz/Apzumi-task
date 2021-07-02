@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @AllArgsConstructor
 @Transactional
-public class PostFetchService extends AbstractPostService {
+public class PostFetchService {
     public static final String BASE_API_URL = "https://jsonplaceholder.typicode.com/posts";
     private final PostRepository postRepository;
     private final PostMapper postMapper;
