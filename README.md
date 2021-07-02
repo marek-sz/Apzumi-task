@@ -28,4 +28,6 @@
 * Actuator
 * try-with-resources
 
-* Add Swagger on http://localhost:8080/swagger-ui.html 
+* Add Swagger on http://localhost:8080/swagger-ui.html
+
+* HTTP responses!!!

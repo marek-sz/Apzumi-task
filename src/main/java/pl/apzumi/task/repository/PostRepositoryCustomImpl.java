@@ -36,12 +36,12 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     }
 
     @Override
-    public List<PostEntity> getFilteredPosts(String title) {
+    public List<PostEntity> getPosts(String title) {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<PostEntity> cq = cb.createQuery(PostEntity.class);
         Root<PostEntity> postEntityRoot = cq.from(PostEntity.class);
         cq.select(postEntityRoot)
-                .where(cb.like(postEntityRoot.get("title"), title));
+                .where(cb.like(postEntityRoot.get("title"), "%" + title + "%"));
         return entityManager.createQuery(cq).getResultList();
     }
 }

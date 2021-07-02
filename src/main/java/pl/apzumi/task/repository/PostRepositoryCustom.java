@@ -7,5 +7,5 @@ import java.util.List;
 public interface PostRepositoryCustom {
     void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts);
 
-    List<PostEntity> getFilteredPosts(String name);
+    List<PostEntity> getPosts(String name);
 }

@@ -19,13 +19,13 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 @AllArgsConstructor
+@Transactional
 public class PostFetchService extends AbstractPostService {
     public static final String BASE_API_URL = "https://jsonplaceholder.typicode.com/posts";
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
     @Scheduled(cron = "* * * * * ?")
-    @Transactional
     public void fetchData() {
         List<PostEntity> posts = postMapper.mapToEntities(getPosts());
         if (postRepository.count() == 0) {
