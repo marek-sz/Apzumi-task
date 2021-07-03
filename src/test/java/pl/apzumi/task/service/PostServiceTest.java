@@ -9,6 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
@@ -51,8 +52,23 @@ class PostServiceTest {
     }
 
     @Test
-    @Disabled
-    void deletePost() {
+    void shouldDeletePost() {
+        // given
+        PostEntity post = PostEntity.builder()
+                .id(1L)
+                .userId(1L)
+                .title("title1")
+                .body("body1")
+                .modifiedByUser(false)
+                .build();
+        Long id = 1L;
+        Mockito.when(postRepository.findById(id)).thenReturn(java.util.Optional.ofNullable(post));
+
+        // when
+        postService.deletePost(id);
+
+        // then
+        Mockito.verify(postRepository).deleteById(1L);
     }
 
     @Test
