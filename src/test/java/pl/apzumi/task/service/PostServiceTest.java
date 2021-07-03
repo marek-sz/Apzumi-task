@@ -9,9 +9,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.web.server.ResponseStatusException;
 import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
+
+import static java.util.Optional.ofNullable;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceTest {
@@ -52,7 +56,7 @@ class PostServiceTest {
     }
 
     @Test
-    void shouldDeletePost() {
+    void shouldDeletePostWhenDoesExists() {
         // given
         PostEntity post = PostEntity.builder()
                 .id(1L)
@@ -62,7 +66,7 @@ class PostServiceTest {
                 .modifiedByUser(false)
                 .build();
         Long id = 1L;
-        Mockito.when(postRepository.findById(id)).thenReturn(java.util.Optional.ofNullable(post));
+        Mockito.when(postRepository.findById(id)).thenReturn(ofNullable(post));
 
         // when
         postService.deletePost(id);
@@ -72,7 +76,13 @@ class PostServiceTest {
     }
 
     @Test
-    @Disabled
-    void updatePost() {
+    void shouldThrowExceptionWhenTryingDeleteNonExistingPost() {
+        assertThrows(ResponseStatusException.class, () -> postService.deletePost(999L));
     }
+
+    @Test
+    @Disabled
+    void updateExistingPost() {
+    }
+
 }
