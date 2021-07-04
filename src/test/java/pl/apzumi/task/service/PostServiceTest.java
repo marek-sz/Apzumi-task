@@ -2,7 +2,6 @@ package pl.apzumi.task.service;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -80,10 +79,4 @@ class PostServiceTest {
     void shouldThrowExceptionWhenTryingDeleteNonExistingPost() {
         assertThrows(ResponseStatusException.class, () -> postService.deletePost(999L));
     }
-
-    @Test
-    @Disabled
-    void updateExistingPost() {
-    }
-
 }

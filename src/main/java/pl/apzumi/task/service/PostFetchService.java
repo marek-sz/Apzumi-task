@@ -25,7 +25,7 @@ public class PostFetchService {
     private final PostRepository postRepository;
     private final PostMapper postMapper;
 
-    @Scheduled(cron = "*/10 * * * * ?")
+    @Scheduled(cron = "0 0 12 * * ?", zone = "Europe/Warsaw")
     public void fetchData() {
         List<PostEntity> posts = postMapper.mapToEntities(getPosts());
         if (postRepository.count() == 0) {
@@ -38,7 +38,6 @@ public class PostFetchService {
     }
 
     private List<PostDto> getPosts() {
-        // TODO: 2021-06-30 add try with resources
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PostDto[]> responseEntity = restTemplate.getForEntity(BASE_API_URL, PostDto[].class);
         PostDto[] postsArray = responseEntity.getBody();
@@ -46,8 +45,4 @@ public class PostFetchService {
         return Arrays.stream(postsArray)
                 .collect(Collectors.toList());
     }
-    //wyjątek
-    //negatywne przypadki
-    //kod błędu
-// czemu lombok
 }

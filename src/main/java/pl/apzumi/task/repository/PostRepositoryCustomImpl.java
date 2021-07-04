@@ -18,7 +18,6 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
     @PersistenceContext
     private EntityManager entityManager;
 
-    // TODO: 2021-07-01 Criteria api for update??
     @Override
     public void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts) {
         QPostEntity qPostEntity = QPostEntity.postEntity;
@@ -43,7 +42,5 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
         criteriaQuery.select(postEntityRoot)
                 .where(criteriaBuilder.like(postEntityRoot.get("title"), "%" + title + "%"));
         return entityManager.createQuery(criteriaQuery).getResultList();
-        //za duze stringi
-        //dane sa zwracane, lub błąd połączenia
     }
 }

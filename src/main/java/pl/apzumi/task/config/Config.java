@@ -22,6 +22,4 @@ public class Config {
                 .paths(PathSelectors.any())
                 .build();
     }
-
-    //co robi ten docket
 }

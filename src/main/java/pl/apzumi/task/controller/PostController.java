@@ -14,7 +14,6 @@ public class PostController {
     private final PostFetchService postFetchService;
     private final PostService postService;
 
-    //moze get jednak? komunikat w jsonie
     @PutMapping("/fetch")
     public void fetchAllPosts() {
         postFetchService.fetchData();
