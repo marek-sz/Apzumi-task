@@ -1,33 +1,38 @@
-# Apzumi
-## Recruitment task
-### TODO
-* H2 database
-    * application.properties
-    * hardcoded / passed as parameters??
-   
-* Post Entity
-* Post DTO
-* Mapper??
+## Apzumi - Recruitment task
+_____________________
+### Description
+_____________________
+Application fetches data from external web service <br>
+https://jsonplaceholder.typicode.com/posts 
 
-* RESTController("/baseURL??")
-    * @GetMapping ("/posts") + filtering
-    * Criteria API for filtering results
-    * @DeleteMapping("/posts/{id}")
-    * @PutMapping("/posts/") - update
-    * @GetMapping("/force download") - on the same method as @Scheduled
+Data is fetched once every day at 12 p.m. for Europe/Warsaw time zone.
 
-* Spring HATEOAS?? 
-* @Scheduler (cron)
+By default application starts at port 8080
 
-* Controller
-* Service
-* Repository
+User can force fetch at anytime using "/fetch" endpoint (PUT method). More about available endpoints in the API Documentation.
 
-* RestTemplate do parsowania Jsona z api
+Application uses H2-in-memory database.
+<br>
+<br>
 
-* Actuator
-* try-with-resources
+### API Documentation
+_____________________
+Full API Documentation with enlisted endpoints is available at:<br>
+<https://localhost:8080/swagger-ui.html>
+<br>
+<br>
 
-* Add Swagger on http://localhost:8080/swagger-ui.html
+### Run
+_____________________
+Clone this project by typing in the command line:<br>
+`git clone "https://github.com/marek-sz/Apzumi-task.git"`
 
-* HTTP responses!!!
+And then type:<br>
+`mvn install spring-boot:run` 
+<br>
+<br>
+
+##### Note
+_____________________
+Before accessing data make sure to fetch them first ;)
+Enjoy!

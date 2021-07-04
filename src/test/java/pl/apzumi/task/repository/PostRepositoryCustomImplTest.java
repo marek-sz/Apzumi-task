@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
 import pl.apzumi.task.domain.PostEntity;
 
@@ -19,8 +18,6 @@ import static org.junit.jupiter.api.TestInstance.Lifecycle;
 @SpringBootTest
 @Transactional
 @TestInstance(Lifecycle.PER_CLASS)
-@TestPropertySource(
-        locations = "classpath:test.properties")
 public class PostRepositoryCustomImplTest {
 
     @Autowired
