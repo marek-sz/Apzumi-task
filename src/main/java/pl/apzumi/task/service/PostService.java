@@ -24,7 +24,7 @@ public class PostService {
 
     public List<PostDto> getFilteredPostsByTitle(String title) {
         // TODO: 2021-07-01 call method with/without parameter
-        if (title == null) {
+        if (title == null || title.isBlank()) {
             return postMapper.mapToDtos(postRepository.findAll());
         }
         return postMapper.mapToDtos(postRepository.getPosts(title));
@@ -37,7 +37,8 @@ public class PostService {
 
     public void updatePost(Long id, String title, String body) {
         PostEntity postEntity = checkIfPostExists(id);
-
+//is blank
+//jak to dziala??
         if (title != null &&
                 title.length() > 0 &&
                 !Objects.equals(postEntity.getTitle(), title)) {

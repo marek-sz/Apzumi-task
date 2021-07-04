@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.web.server.ResponseStatusException;
@@ -16,6 +15,8 @@ import pl.apzumi.task.repository.PostRepository;
 
 import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PostServiceTest {
@@ -44,7 +45,7 @@ class PostServiceTest {
         //when
         postService.getFilteredPostsByTitle(null);
         //then
-        Mockito.verify(postRepository).findAll();
+        verify(postRepository).findAll();
     }
 
     @Test
@@ -52,7 +53,7 @@ class PostServiceTest {
         //when
         postService.getFilteredPostsByTitle("null");
         //then
-        Mockito.verify(postRepository).getPosts("null");
+        verify(postRepository).getPosts("null");
     }
 
     @Test
@@ -66,13 +67,13 @@ class PostServiceTest {
                 .modifiedByUser(false)
                 .build();
         Long id = 1L;
-        Mockito.when(postRepository.findById(id)).thenReturn(ofNullable(post));
+        when(postRepository.findById(id)).thenReturn(ofNullable(post));
 
         // when
         postService.deletePost(id);
 
         // then
-        Mockito.verify(postRepository).deleteById(1L);
+        verify(postRepository).deleteById(1L);
     }
 
     @Test

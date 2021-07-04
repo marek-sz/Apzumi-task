@@ -46,4 +46,8 @@ public class PostFetchService {
         return Arrays.stream(postsArray)
                 .collect(Collectors.toList());
     }
+    //wyjątek
+    //negatywne przypadki
+    //kod błędu
+// czemu lombok
 }

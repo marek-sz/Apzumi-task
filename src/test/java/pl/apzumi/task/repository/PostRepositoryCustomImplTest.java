@@ -95,4 +95,5 @@ public class PostRepositoryCustomImplTest {
         assertEquals(1, posts.size());
         assertTrue(posts.contains(postFromDb1));
     }
+
 }

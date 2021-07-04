@@ -8,5 +8,5 @@ public interface PostRepositoryCustom {
 
     void updateAllExceptEditedAndDeletedByUser(List<PostEntity> posts);
 
-    List<PostEntity> getPosts(String name);
+    List<PostEntity> getPosts(String title);
 }
