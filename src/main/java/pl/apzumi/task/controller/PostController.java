@@ -1,8 +1,11 @@
 package pl.apzumi.task.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.apzumi.task.dto.PostDto;
+import pl.apzumi.task.dto.PostUpdateDto;
 import pl.apzumi.task.service.PostFetchService;
 import pl.apzumi.task.service.PostService;
 
@@ -25,23 +28,17 @@ public class PostController {
     }
 
     @DeleteMapping("/posts/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void deletePost(@PathVariable Long id) {
         postService.deletePost(id);
     }
 
-    @PutMapping("/posts/{id}")
-    public void updatePost(
-            @PathVariable Long id,
-            @RequestParam String title,
-            @RequestParam String body) {
-        postService.updatePost(id, title, body);
-    }
-
-    @PatchMapping("/postsdto/{id}")
+    @PatchMapping("/posts/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePostWithDto(
             @PathVariable Long id,
-            @RequestBody PostDto postDto) {
-        postService.updatePostWithDto(id, postDto);
+            @Validated @RequestBody PostUpdateDto postUpdateDto) {
+        postService.updatePostWithDto(id, postUpdateDto);
     }
 
 }
