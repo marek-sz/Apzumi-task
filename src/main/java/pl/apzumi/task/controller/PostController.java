@@ -18,11 +18,13 @@ public class PostController {
     private final PostService postService;
 
     @PutMapping("/fetch")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void fetchAllPosts() {
         postFetchService.fetchData();
     }
 
     @GetMapping("/posts")
+    @ResponseStatus(HttpStatus.OK)
     public List<PostDto> getFilteredPosts(@RequestParam(required = false) String title) {
         return postService.getFilteredPostsByTitle(title);
     }
@@ -40,5 +42,4 @@ public class PostController {
             @Validated @RequestBody PostUpdateDto postUpdateDto) {
         postService.updatePostWithDto(id, postUpdateDto);
     }
-
 }
