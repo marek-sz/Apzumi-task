@@ -36,4 +36,12 @@ public class PostController {
             @RequestParam String body) {
         postService.updatePost(id, title, body);
     }
+
+    @PatchMapping("/postsdto/{id}")
+    public void updatePostWithDto(
+            @PathVariable Long id,
+            @RequestBody PostDto postDto) {
+        postService.updatePostWithDto(id, postDto);
+    }
+
 }

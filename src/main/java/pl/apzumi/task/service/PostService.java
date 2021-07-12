@@ -55,4 +55,12 @@ public class PostService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Resource with id " + id + " not found"));
     }
+
+    public void updatePostWithDto(Long id, PostDto postDto) {
+        PostEntity postEntity = checkIfPostExists(id);
+        postEntity.setModifiedByUser(true);
+        postEntity.setTitle(postDto.getTitle());
+        postEntity.setBody(postDto.getBody());
+
+    }
 }

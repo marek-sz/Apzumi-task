@@ -38,7 +38,6 @@ public class PostFetchService {
     }
 
     private List<PostDto> getPosts() {
-
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<PostDto[]> responseEntity = restTemplate.getForEntity(BASE_API_URL, PostDto[].class);
         PostDto[] postsArray = responseEntity.getBody();
