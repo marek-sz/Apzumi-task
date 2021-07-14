@@ -13,6 +13,7 @@ import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
 import javax.annotation.PostConstruct;
+import java.net.ConnectException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +29,7 @@ public class PostFetchService {
 
     @Scheduled(cron = "0 0 12 * * ?", zone = "Europe/Warsaw")
     @PostConstruct
-    public void fetchData() {
+    public void fetchData() throws ConnectException {
         List<PostEntity> posts = postMapper.mapToEntities(getPosts());
         if (postRepository.count() == 0) {
             postRepository.saveAll(posts);
@@ -39,9 +40,14 @@ public class PostFetchService {
         }
     }
 
-    private List<PostDto> getPosts() {
+    private List<PostDto> getPosts() throws ConnectException {
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<PostDto[]> responseEntity = restTemplate.getForEntity(BASE_API_URL, PostDto[].class);
+        ResponseEntity<PostDto[]> responseEntity;
+        try {
+            responseEntity = restTemplate.getForEntity(BASE_API_URL, PostDto[].class);
+        } catch (Exception e) {
+            throw new ConnectException("Unable to establish connection with " + BASE_API_URL);
+        }
         PostDto[] postsArray = responseEntity.getBody();
         assert postsArray != null;
         return Arrays.stream(postsArray)

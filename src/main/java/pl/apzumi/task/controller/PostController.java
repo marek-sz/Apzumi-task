@@ -9,6 +9,7 @@ import pl.apzumi.task.dto.PostUpdateDto;
 import pl.apzumi.task.service.PostFetchService;
 import pl.apzumi.task.service.PostService;
 
+import java.net.ConnectException;
 import java.util.List;
 
 @RestController
@@ -19,7 +20,7 @@ public class PostController {
 
     @PutMapping("/fetch")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void fetchAllPosts() {
+    public void fetchAllPosts() throws ConnectException {
         postFetchService.fetchData();
     }
 

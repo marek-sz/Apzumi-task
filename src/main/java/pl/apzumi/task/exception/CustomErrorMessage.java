@@ -11,5 +11,6 @@ public class CustomErrorMessage {
     private int statusCode;
     private LocalDateTime timestamp;
     private String message;
+    private String description;
 
 }
