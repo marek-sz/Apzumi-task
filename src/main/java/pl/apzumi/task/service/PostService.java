@@ -2,16 +2,15 @@ package pl.apzumi.task.service;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 import pl.apzumi.task.domain.PostEntity;
 import pl.apzumi.task.dto.PostDto;
 import pl.apzumi.task.dto.PostUpdateDto;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -43,7 +42,7 @@ public class PostService {
 
     private PostEntity checkIfPostExists(Long id) {
         return postRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Resource with id " + id + " not found"));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Resource with id " + id + " not found"));
     }
 }

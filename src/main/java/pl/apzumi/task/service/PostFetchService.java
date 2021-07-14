@@ -12,6 +12,7 @@ import pl.apzumi.task.dto.PostDto;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
+import javax.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,6 +27,7 @@ public class PostFetchService {
     private final PostMapper postMapper;
 
     @Scheduled(cron = "0 0 12 * * ?", zone = "Europe/Warsaw")
+    @PostConstruct
     public void fetchData() {
         List<PostEntity> posts = postMapper.mapToEntities(getPosts());
         if (postRepository.count() == 0) {
