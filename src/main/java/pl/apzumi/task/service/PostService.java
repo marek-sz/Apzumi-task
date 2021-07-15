@@ -13,7 +13,6 @@ import pl.apzumi.task.dto.PostUpdateDto;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ public class PostService {
     private final PostMapper postMapper;
 
     @Scheduled(cron = "0 0 12 * * ?", zone = "Europe/Warsaw")
-    @PostConstruct
     public void fetchData() throws ConnectException {
         List<PostDto> postsFromApi = postFetchService.getPosts();
         List<PostEntity> postEntities = postMapper.mapToEntities(postsFromApi);

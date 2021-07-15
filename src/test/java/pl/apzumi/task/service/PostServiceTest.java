@@ -1,5 +1,6 @@
 package pl.apzumi.task.service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,10 +8,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.server.ResponseStatusException;
 import pl.apzumi.task.domain.PostEntity;
+import pl.apzumi.task.domain.QPostEntity;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
+
+import javax.persistence.EntityNotFoundException;
 
 import static java.util.Optional.ofNullable;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -54,7 +57,9 @@ class PostServiceTest {
         //when
         postService.getFilteredPostsByTitle("null");
         //then
-        verify(postRepository).getPosts("null");
+        BooleanExpression booleanExpression = QPostEntity.postEntity.title.containsIgnoreCase("null");
+        verify(postRepository).findAll(booleanExpression);
+
     }
 
     @Test
@@ -79,6 +84,7 @@ class PostServiceTest {
 
     @Test
     void shouldThrowExceptionWhenTryingDeleteNonExistingPost() {
-        assertThrows(ResponseStatusException.class, () -> postService.deletePost(999L));
+        assertThrows(EntityNotFoundException.class, () -> postService.deletePost(999L));
     }
+
 }

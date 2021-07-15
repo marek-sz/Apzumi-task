@@ -80,17 +80,11 @@ public class PostRepositoryCustomImplTest {
 
     @Test
     public void shouldUpdatePostsExceptModifiedByUser() {
+
         postRepository.updateAllExceptEditedAndDeletedByUser(fetchedFromPublicApi);
         assertEquals(2, postRepository.count());
         assertTrue(postRepository.findAll().contains(postFromApi1));
         assertTrue(postRepository.findAll().contains(postFromDb2));
-    }
-
-    @Test
-    void shouldReturnOnePostWhenGetPostsIsCalledWithParameter() {
-        List<PostEntity> posts = postRepository.getPosts("title1");
-        assertEquals(1, posts.size());
-        assertTrue(posts.contains(postFromDb1));
     }
 
 }

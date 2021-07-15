@@ -1,5 +1,6 @@
 package pl.apzumi.task.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -8,6 +9,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import pl.apzumi.task.dto.PostUpdateDto;
 import pl.apzumi.task.service.PostService;
 
 import static org.mockito.ArgumentMatchers.anyString;
@@ -62,11 +64,16 @@ class PostControllerTest {
     @Test
     void shouldUpdatePost() throws Exception {
         String url = "/posts/2";
+        PostUpdateDto postUpdateDto = new PostUpdateDto();
+        postUpdateDto.setTitle("title");
+        postUpdateDto.setBody("body");
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonContent = objectMapper.writeValueAsString(postUpdateDto);
         mockMvc.perform(
-                put(url)
-                        .param("title", "title")
-                        .param("body", "body")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                patch(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .content(jsonContent))
+                .andExpect(status().isNoContent());
     }
 }

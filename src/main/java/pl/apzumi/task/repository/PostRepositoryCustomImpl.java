@@ -1,6 +1,5 @@
 package pl.apzumi.task.repository;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import pl.apzumi.task.domain.PostEntity;
@@ -8,9 +7,6 @@ import pl.apzumi.task.domain.QPostEntity;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
@@ -33,18 +29,5 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
                                 .set(qPostEntity.body, postEntity.getBody())
                                 .execute()
                 );
-    }
-
-    @Override
-    public List<PostEntity> getPosts(String title) {
-        QPostEntity qPostEntity = QPostEntity.postEntity;
-        BooleanExpression booleanExpression = QPostEntity.postEntity.title.containsIgnoreCase(title);
-
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<PostEntity> criteriaQuery = criteriaBuilder.createQuery(PostEntity.class);
-        Root<PostEntity> postEntityRoot = criteriaQuery.from(PostEntity.class);
-        criteriaQuery.select(postEntityRoot)
-                .where(criteriaBuilder.like(postEntityRoot.get("title"), "%" + title + "%"));
-        return entityManager.createQuery(criteriaQuery).getResultList();
     }
 }

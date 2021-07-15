@@ -10,7 +10,6 @@ import javax.validation.constraints.NotEmpty;
 @AllArgsConstructor
 @ToString
 public class PostUpdateDto {
-    // TODO: 2021-07-12 extract fields to properties?
     @NotEmpty(message = "Field cannot be empty")
     private String title;
     @NotEmpty(message = "Field cannot be empty")
