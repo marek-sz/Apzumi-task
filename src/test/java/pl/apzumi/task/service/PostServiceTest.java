@@ -23,6 +23,8 @@ class PostServiceTest {
     private PostRepository postRepository;
     @Mock
     private PostMapper postMapper;
+    @Mock
+    private PostFetchService postFetchService;
 
     private AutoCloseable autoCloseable;
 
@@ -31,7 +33,7 @@ class PostServiceTest {
     @BeforeEach
     void setUp() {
         autoCloseable = MockitoAnnotations.openMocks(this);
-        postService = new PostService(postRepository, postMapper);
+        postService = new PostService(postFetchService, postRepository, postMapper);
     }
 
     @AfterEach

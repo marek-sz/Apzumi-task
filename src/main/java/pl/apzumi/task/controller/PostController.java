@@ -6,7 +6,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.apzumi.task.dto.PostDto;
 import pl.apzumi.task.dto.PostUpdateDto;
-import pl.apzumi.task.service.PostFetchService;
 import pl.apzumi.task.service.PostService;
 
 import java.net.ConnectException;
@@ -15,13 +14,12 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class PostController {
-    private final PostFetchService postFetchService;
     private final PostService postService;
 
     @PutMapping("/fetch")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void fetchAllPosts() throws ConnectException {
-        postFetchService.fetchData();
+        postService.fetchData();
     }
 
     @GetMapping("/posts")
@@ -43,5 +41,4 @@ public class PostController {
             @Validated @RequestBody PostUpdateDto postUpdateDto) {
         postService.updatePostWithDto(id, postUpdateDto);
     }
-
 }
