@@ -1,16 +1,19 @@
 package pl.apzumi.task.service;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.apzumi.task.domain.PostEntity;
+import pl.apzumi.task.domain.QPostEntity;
 import pl.apzumi.task.dto.PostDto;
 import pl.apzumi.task.dto.PostUpdateDto;
 import pl.apzumi.task.mappers.PostMapper;
 import pl.apzumi.task.repository.PostRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -25,7 +28,10 @@ public class PostService {
         if (title == null || title.isBlank()) {
             return postMapper.mapToDtos(postRepository.findAll());
         }
-        return postMapper.mapToDtos(postRepository.getPosts(title));
+        BooleanExpression booleanExpression = QPostEntity.postEntity.title.containsIgnoreCase(title);
+        List<PostEntity> list = new ArrayList<>();
+        postRepository.findAll(booleanExpression).forEach(list::add);
+        return postMapper.mapToDtos(list);
     }
 
     public void deletePost(Long id) {
@@ -45,4 +51,5 @@ public class PostService {
                 .orElseThrow(() ->
                         new EntityNotFoundException("Resource with id " + id + " not found"));
     }
+
 }

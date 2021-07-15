@@ -43,4 +43,5 @@ public class PostController {
             @Validated @RequestBody PostUpdateDto postUpdateDto) {
         postService.updatePostWithDto(id, postUpdateDto);
     }
+
 }

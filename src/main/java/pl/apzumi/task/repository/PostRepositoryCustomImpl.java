@@ -1,5 +1,6 @@
 package pl.apzumi.task.repository;
 
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import org.springframework.stereotype.Repository;
 import pl.apzumi.task.domain.PostEntity;
@@ -36,6 +37,9 @@ public class PostRepositoryCustomImpl implements PostRepositoryCustom {
 
     @Override
     public List<PostEntity> getPosts(String title) {
+        QPostEntity qPostEntity = QPostEntity.postEntity;
+        BooleanExpression booleanExpression = QPostEntity.postEntity.title.containsIgnoreCase(title);
+
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<PostEntity> criteriaQuery = criteriaBuilder.createQuery(PostEntity.class);
         Root<PostEntity> postEntityRoot = criteriaQuery.from(PostEntity.class);
